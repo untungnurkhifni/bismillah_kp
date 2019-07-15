@@ -92,13 +92,13 @@ class Artikel extends REST_Controller {
 		if($hapus){
 			$this->response([
 				'success' => true,
-				'message' => 'Data Berhasil Terkirim',
+				'message' => 'Data Berhasil Terhapus',
 				'data' => '404'
 			], 200);
 		} else {
 			$this->response([
 				'success' => false,
-				'message' => 'Data Gagal Dikirim',
+				'message' => 'Data Gagal Dihapus',
 				'data' => '404'
 			], 200);
 		}

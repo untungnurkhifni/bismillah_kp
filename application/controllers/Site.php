@@ -17,8 +17,6 @@ class Site extends REST_Controller {
 		//mengambil data dari Database
 		$data = $this->db->get('tb_admin');
 		
-		
-
 		$this->response([
 			'success' => true,
 			'message' => 'API',
