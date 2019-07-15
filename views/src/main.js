@@ -3,6 +3,7 @@ import "./plugins/vuetify";
 import App from "./App.vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import VueMeta from "vue-meta";
 import router from "./router";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBook, faGlobe } from "@fortawesome/free-solid-svg-icons";
@@ -19,6 +20,7 @@ library.add(faGlobe, faBook, faInstagram, faTwitter, faFacebook);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueAxios, axios);
+Vue.use(VueMeta);
 
 axios.defaults.baseURL = "http://localhost/kp_amikom/index.php/api";
 Vue.config.productionTip = false;

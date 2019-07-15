@@ -4,8 +4,6 @@ import Home from "./views/Home.vue";
 import Kurikulum from "./views/Kurikulum.vue";
 import Login from "./views/Login.vue";
 import Crud from "./views/Crud.vue";
-import Post from "./views/Post.vue";
-import User from "./views/User.vue";
 
 Vue.use(Router);
 

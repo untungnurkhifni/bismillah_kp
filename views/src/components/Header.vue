@@ -87,7 +87,7 @@ header {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 80vh;
+  height: 85vh;
 
   @include bp-small() {
     height:65vh;

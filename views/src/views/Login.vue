@@ -83,6 +83,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/css/variables";
+
+.theme--light.application {
+  background-color:lighten(#C6D7DB, 13)!important;
+}
+
 .application--wrap {
   min-height: 100vh !important;
 }
