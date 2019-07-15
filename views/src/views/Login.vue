@@ -1,0 +1,98 @@
+<template>
+  <v-app>
+    <v-content>
+      <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md4>
+            <v-card class="elevation-12">
+              <v-toolbar dark color="deep-purple darken-3">
+                <v-btn flat icon color="white">
+                  <router-link to="/">
+                    <v-icon>arrow_back</v-icon>
+                  </router-link>
+                </v-btn>
+                <v-toolbar-title>Login form</v-toolbar-title>
+              </v-toolbar>
+              <v-card-text>
+                <v-form>
+                  <v-text-field 
+                    prepend-icon="mail"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required></v-text-field>
+                  <v-text-field
+                    prepend-icon="lock"
+                    label="Password"
+                    v-model="password"
+                    :append-icon="show ? 'visibility' : 'visibility_off'"
+                    :rules="[rules.required, rules.min]"
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                  ></v-text-field>
+                  <v-select
+                    prepend-icon="person"
+                    v-model="select"
+                    :items="items"
+                    :rules="[v => !!v || 'This is required']"
+                    label="Masuk sebagai..."
+                    required
+                  ></v-select>
+                </v-form>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn dark color="deep-purple darken-3">Login</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
+</template>
+
+<script>
+export default {
+  name: "Home",
+   data: () => ({
+      show: false,
+      valid: true,
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      password: '',
+      rules: {
+        required: value => !!value || 'Required.'
+      },
+      select: null,
+      items: [
+        'Masuk sebagai prodi',
+        'Masuk sebagai dosen'
+      ]
+    }),
+  metaInfo: {
+    title: "Login | Prodi Teknik Informatika - Universitas Amikom Purwokerto",
+    // override the parent template and just use the above title only
+    titleTemplate: null
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+@import "../assets/css/variables";
+.application--wrap {
+  min-height: 100vh !important;
+}
+
+.v-toolbar__title {
+  font-family: $heading-font;
+}
+
+.v-btn__content a {
+  color: #fff;
+  text-decoration: none;
+}
+</style>

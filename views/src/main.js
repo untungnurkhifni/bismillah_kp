@@ -1,18 +1,29 @@
-import Vue from 'vue'
-import './plugins/vuetify'
-import App from './App.vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import router from './router';
+import Vue from "vue";
+import "./plugins/vuetify";
+import App from "./App.vue";
+import axios from "axios";
+import VueAxios from "vue-axios";
+import router from "./router";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBook, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import {
+	faInstagram,
+	faTwitter,
+	faFacebook
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import "vuetify/dist/vuetify.min.css";
+import "flickity/dist/flickity.min.css";
 
+library.add(faGlobe, faBook, faInstagram, faTwitter, faFacebook);
 
-Vue.use(VueAxios,axios)
+Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.use(VueAxios, axios);
 
-axios.defaults.baseURL = 'http://localhost/coba_vue_ci/index.php/api' 
-//web servis
-Vue.config.productionTip = false
+axios.defaults.baseURL = "http://localhost/kp_amikom/index.php/api";
+Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(App),
-}).$mount('#app')
+	router,
+	render: h => h(App)
+}).$mount("#app");
