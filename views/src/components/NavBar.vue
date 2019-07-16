@@ -3,7 +3,7 @@
     <div class="navigation__small">
       <div>
         <ul class="menu__link">
-        <li><a href="#">Tentang kami</a></li>
+        <li><router-link to="/tentang">Tentang kami</router-link></li>
         <li><a href="#">Kontak</a></li>
         <li><a href="#"><font-awesome-icon :icon="['fas', 'globe']" size="lg" /> Website utama</a></li>
         <li><router-link to="/crud">CRUD (beta test)</router-link></li>
@@ -182,6 +182,11 @@ nav {
     font-family: $heading-font;
     font-size: 0.75em;
     padding:0.85rem 2rem;
+
+    a.router-link-exact-active {
+      padding-bottom: 0.25em;
+      border-bottom:2px solid currentColor;
+    }
 
     a.login-btn {
       display: block;

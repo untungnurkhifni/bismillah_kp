@@ -20,24 +20,28 @@
       </div>
   
         <div class="grid__wrapper">
-          <div class="grid__wrapper--heading"><h1>Berita</h1>
+          <div class="grid__wrapper--heading"><h1>Berita terkini</h1>
           
           <button aria-describedby="Baca selengkapnya"><span>Baca selengkapnya</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="arcs"><path d="M5 12h13M12 5l7 7-7 7"/></svg></button>
           </div>
           <div class="grid__wrapper--news">
-            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
+            <h2>Judul berita</h2>
+            {{ lorem }}
           </div>
 
           <div class="grid__wrapper--news">
-            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
+            <h2>Judul berita</h2>
+            {{ lorem }}
           </div>
 
           <div class="grid__wrapper--news">
-            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
+            <h2>Judul berita</h2>
+            {{ lorem }}
           </div>
 
           <div class="grid__wrapper--news">
-            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
+            <h2>Judul berita</h2>
+            {{ lorem }}
           </div>
         </div>
       
@@ -135,7 +139,7 @@ h3 {
           }
         }
 
-        @include box-shadow(4px, 8px, 15px, 0, lighten(#000, 85));
+        @include box-shadow(4px, 8px, 15px, 0, lighten(#000, 90));
         text-align: center;
         h1 {
           font-size: 1.5em;
@@ -160,6 +164,7 @@ h3 {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
+  @include box-shadow(4px, 8px, 15px, 0, lighten(#000, 90));
 
   &--heading {
     grid-column: 1/-1;
@@ -170,16 +175,25 @@ h3 {
 
     h1 {
       font-size: 1.85em;
+      -webkit-text-fill-color: $white; /* Will override color (regardless of order) */
+      -webkit-text-stroke-width: 1.5px;
+      -webkit-text-stroke-color: $black;
     }
 
     button {
       background-color:$secondary-color;
-      color:rgba( $white, 0.85);
+      color:rgba( $white, 0.95);
       font-size: 0.95em;
+      font-weight: bold;
       padding:0.5rem 1rem;
       -webkit-border-radius: 30px;
       -moz-border-radius: 30px;
       border-radius: 30px;
+      @include transition(400ms ease-in-out);
+
+      &:hover {
+        background-color:darken($secondary-color, 25);
+      }
 
       @include bp-medium() {
          span {
@@ -202,7 +216,6 @@ h3 {
 
      position: relative;
      color:lighten($black, 45);
-     background-color:$white;
      -webkit-border-radius: 15px;
      -moz-border-radius: 15px;
      border-radius: 15px;

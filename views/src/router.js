@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import Tentang from "./views/Tentang.vue";
 import Kurikulum from "./views/Kurikulum.vue";
 import Login from "./views/Login.vue";
 import Crud from "./views/Crud.vue";
@@ -14,6 +15,11 @@ export default new Router({
 			path: "/",
 			name: "home",
 			component: Home
+		},
+		{
+			path: "/tentang",
+			name: "tentang",
+			component: Tentang
 		},
 		{
 			path: "/kurikulum",

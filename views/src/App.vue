@@ -59,7 +59,7 @@ export default {
 
 .container__p {
   font-family:$body-font;
-  padding:4.5rem 4rem;
+  padding:5.5rem 4rem;
   background-color:lighten(#C6D7DB, 13);
 
   @include bp-medium() {
@@ -71,9 +71,19 @@ export default {
     margin:0 auto;
 
     h1, h2, h3 {
-    font-weight: bold;
-    margin-bottom: 0.5rem!important;
-  }
+      font-weight: bold;
+      margin-bottom: 0.5rem!important;
+    }
+
+    &-grid {
+      display: grid;
+      grid-gap: 4rem;
+      grid-template-columns: repeat(2, 1fr);
+
+      @include bp-medium() {
+        grid-template-columns: 1fr;
+      }
+    }
   }
   
 }
