@@ -63,11 +63,11 @@ export default {
   background-color:lighten(#C6D7DB, 13);
 
   @include bp-medium() {
-    padding:2.5rem 2rem;
+    padding:3.5em 2rem 2.5rem 2rem;
   }
 
   &--inner {
-    max-width: 1240px;
+    max-width: 85vw;
     margin:0 auto;
 
     h1, h2, h3 {

@@ -18,29 +18,29 @@
           Fasilitas terbaik disiapkan agar mahasiswa nyaman dalam mengikuti perkuliahan.
         </div>
       </div>
-
-      <div class="flex--item">
-        <div class="grid__wrapper-news">
-          <h1>Berita</h1>
-          <div class="grid-news">
+  
+        <div class="grid__wrapper">
+          <div class="grid__wrapper--heading"><h1>Berita</h1>
+          
+          <button aria-describedby="Baca selengkapnya"><span>Baca selengkapnya</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="arcs"><path d="M5 12h13M12 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="grid__wrapper--news">
             <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
           </div>
-          <div class="grid-news">
-            <h2>Judul berita</h2>Sed, itaque illo? Enim, eaque id minus labore qui error! Similique in voluptatibus perspiciatis quas vitae, debitis, qui nisi nam hic dolor quibusdam omnis aliquid dolore facere ipsum illo magnam.
+
+          <div class="grid__wrapper--news">
+            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
           </div>
-          <div class="grid-news">
-            <h2>Judul berita</h2>Sed, itaque illo? Enim, eaque id minus labore qui error! Similique in voluptatibus perspiciatis quas vitae, debitis, qui nisi nam hic dolor quibusdam omnis aliquid dolore facere ipsum illo magnam.
+
+          <div class="grid__wrapper--news">
+            <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
           </div>
-          <div class="grid-news">
+
+          <div class="grid__wrapper--news">
             <h2>Judul berita</h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi aspernatur fuga consectetur magni veritatis minus amet repellendus aperiam magnam culpa soluta aliquam deleniti, exercitationem blanditiis velit perferendis obcaecati, aliquid fugit.
           </div>
         </div>
-
-        <aside>
-          <h1>Galeri</h1>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur similique tempore iusto. Dolores cumque esse obcaecati tempore veritatis, ullam aliquam similique blanditiis voluptatibus corporis harum architecto optio omnis iusto aspernatur.
-        </aside>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -102,12 +102,17 @@ h3 {
 
       .grid__inner {
         background-color:$white;
+        color:lighten($black, 45);
         padding:2.85em 2.5em 2.9em 2.5em;
         -webkit-border-radius: 15px;
         -moz-border-radius: 15px;
         border-radius: 15px;
         transition:400ms;
         cursor: pointer;
+
+        h1, h2, h3 {
+          color:$black;
+        }
 
         &:hover {
           transform: scale(0.97);
@@ -145,36 +150,66 @@ h3 {
   }
 }
 
-.flex--item {
-  display: grid;
-  grid-template-columns: 1fr 20rem;
-  grid-gap: 3.5rem;
-
-  @include bp-large {
-    grid-template-columns: 1fr;
-  }
-}
-
-.grid__wrapper-news {
+.grid__wrapper {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 2.5rem;
+  grid-gap: 3.5rem;
+  background-color:$white;
+  padding:2em 2.5em 3.5em 2.5em;
+  margin-bottom: 2.5em;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+
+  &--heading {
+    grid-column: 1/-1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 1.85em;
+    }
+
+    button {
+      background-color:$secondary-color;
+      color:rgba( $white, 0.85);
+      font-size: 0.95em;
+      padding:0.5rem 1rem;
+      -webkit-border-radius: 30px;
+      -moz-border-radius: 30px;
+      border-radius: 30px;
+
+      @include bp-medium() {
+         span {
+          display: none;
+        }
+      }
+
+      svg {
+        display: inline-block;
+        margin-left:0.5em;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &--news {
+     h2 {
+       color:$black;
+     }
+
+     position: relative;
+     color:lighten($black, 45);
+     background-color:$white;
+     -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+     border-radius: 15px;
+  }
 
   @include bp-large {
     grid-template-columns: 1fr;
-  }
-
-  h1 {
-    font-size: 1.85em;
-    grid-column: 1/-1;
-    padding-bottom: 0.5rem;
-  }
-}
-
-aside {
-  h1 {
-    font-size: 1.85em;
-    padding-bottom: 0.5rem;
   }
 }
 </style>

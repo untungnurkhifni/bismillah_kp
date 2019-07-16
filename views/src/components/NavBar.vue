@@ -9,7 +9,7 @@
         <li><router-link to="/crud">CRUD (beta test)</router-link></li>
       </ul>
       </div>
-      <div><router-link to="/login" class="login-btn">Login</router-link></div>
+      <div><router-link to="/login" class="login-btn"><font-awesome-icon :icon="['fas', 'lock']" size="lg" /> Login</router-link></div>
     </div>
     <div class="navigation__bar">
       <div class="navigation__bar--logo">
@@ -187,12 +187,17 @@ nav {
       display: block;
       padding:0.25rem 0.75rem;
       font-weight: bold;
-      background-color:rgba(225,225,225,0.35);
       color:$white;
       text-decoration: none;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
+
+      svg {
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 0.5em;
+      }
 
       &:hover {
         background-color:rgba(225,225,225,0.25);

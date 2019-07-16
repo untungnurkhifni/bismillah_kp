@@ -6,7 +6,7 @@ import VueAxios from "vue-axios";
 import VueMeta from "vue-meta";
 import router from "./router";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBook, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faGlobe, faLock } from "@fortawesome/free-solid-svg-icons";
 import {
 	faInstagram,
 	faTwitter,
@@ -14,9 +14,9 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "vuetify/dist/vuetify.min.css";
-import "flickity/dist/flickity.min.css";
+import "flickity/dist/flickity.css";
 
-library.add(faGlobe, faBook, faInstagram, faTwitter, faFacebook);
+library.add(faLock, faGlobe, faBook, faInstagram, faTwitter, faFacebook);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(VueAxios, axios);

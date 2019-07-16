@@ -27,7 +27,7 @@ class Login extends REST_Controller{
             $this->response([
                 'success' => true,
                 'message' =>'API',
-                //fungsi result sebagai wadah
+                //fungsi result sebagai wadah 
                 'data'    => $data->result()
     
             ], 200);             

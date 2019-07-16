@@ -40,7 +40,7 @@ export default {
     return {
       flickityOptions: {
         pageDots: false,
-        prevNextButtons: false,
+        prevNextButtons: true,
         autoPlay: 5000,
         wrapAround: true
         
@@ -80,17 +80,19 @@ header {
   background-size: cover;
   background-attachment: fixed;
   font-family: $body-font;
-}
+} 
 
 .carousel-cell {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 85vh;
+  height: calc(80vh + 1rem);
+  padding:0 5vw;
 
   @include bp-small() {
     height:65vh;
+    padding: 0 0;
   }
 
   &__inner {
