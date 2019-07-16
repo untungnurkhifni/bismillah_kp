@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="container__p">
     <div class="container__p--inner">
       <div class="container__p--inner-grid">
@@ -47,15 +48,38 @@
       
     </div>
   </div>
+
+  <div class="container__maps">
+  </div>
+</div>
 </template>
 
 <script>
+import gmapsInit from '../utils/gmaps';
 export default {
   name: "Home",
   data() {
     return {
       lorem:
         "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel."
+    }
+  },
+  async mounted() {
+    try {
+      const google = await gmapsInit();
+      const geocoder = new google.maps.Geocoder();
+      const map = new google.maps.Map(document.querySelector(".container__maps"));
+
+      geocoder.geocode({ address: 'Austria' }, (results, status) => {
+        if (status !== 'OK' || !results[0]) {
+          throw new Error(status);
+        }
+
+        map.setCenter(results[0].geometry.location);
+        map.fitBounds(results[0].geometry.viewport);
+      });
+    } catch (error) {
+      console.error(error);
     }
   },
   metaInfo: {
@@ -224,6 +248,12 @@ h3 {
   @include bp-large {
     grid-template-columns: 1fr;
   }
+}
+
+.container__maps {
+  width:100%;
+  height:65vh;
+  background:grey;
 }
 </style>
 

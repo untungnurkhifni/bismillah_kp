@@ -5,6 +5,7 @@ import Tentang from "./views/Tentang.vue";
 import Kurikulum from "./views/Kurikulum.vue";
 import Login from "./views/Login.vue";
 import Crud from "./views/Crud.vue";
+import NotFound from "./views/404.vue";
 
 Vue.use(Router);
 
@@ -35,6 +36,10 @@ export default new Router({
 			path: "/crud",
 			name: "Crud",
 			component: Crud
+		},
+		{
+			path: "*",
+			component: NotFound
 		}
 	]
 });
