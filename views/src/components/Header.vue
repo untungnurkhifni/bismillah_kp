@@ -69,7 +69,6 @@ $header-bg: #ddd;
 
 header {
   width: 100%;
-  background-color: $header-bg;
   background: rgb(102, 59, 177);
   background: linear-gradient(
     45deg,

@@ -49,6 +49,28 @@
     </div>
   </div>
 
+  <div class="container__achievement">
+    <div class="container__achievement--inner">
+      <div class="container__achievement--inner-heading">
+        <h1>Prestasti sebelumnya</h1>
+      </div>
+      <div class="container__achievement--inner-grid">
+        <img src="../assets/img/placeholder.png" alt="">
+        <div class="body__text">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quibusdam eius nisi placeat at assumenda fugiat, hic consequatur repellat explicabo maiores repellendus voluptatem ducimus? Modi unde maxime molestiae laborum. Repellat, debitis.
+        </div>
+        </div>
+      <div class="container__achievement--inner-grid">
+        <img src="../assets/img/placeholder.png" alt="">
+        <div class="body__text">
+          Molestiae omnis facere, neque molestias magni hic sunt fugit, cum magnam qui repellat adipisci modi! Doloremque reiciendis officia repudiandae numquam quia quod ex iusto ratione, minima consequuntur modi explicabo obcaecati.</div></div>
+      <div class="container__achievement--inner-grid">
+        <img src="../assets/img/placeholder.png" alt="">
+      <div class="body__text">
+        Hic asperiores at, labore unde aliquam officia, ipsam nihil sit tempora error soluta. Possimus, harum quisquam. Repudiandae, atque animi et dolore deleniti ducimus cupiditate minima, nobis beatae illum accusantium natus!</div></div>
+    </div>
+  </div>
+
   <div class="container__maps">
   </div>
 </div>
@@ -250,10 +272,75 @@ h3 {
   }
 }
 
+.container__achievement {
+  font-family:$body-font;
+  background: rgb(102, 59, 177);
+  background: linear-gradient(
+    45deg,
+    rgba(102, 59, 177, 1) 0%,
+    rgba(245, 133, 63, 1) 100%
+  );
+  padding:5.5em 2em;
+
+  @include bp-medium() {
+    padding:2.5em 1.5em;
+  }
+
+  &--inner {
+    max-width: 85vw;
+    margin:auto;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1.5em;
+
+    @include bp-medium() {
+      grid-template-columns: 1fr;
+      grid-gap: 2em;
+    }
+
+    &-heading {
+      grid-column: 1/-1;
+      color:rgba($white, 0.95);
+      margin-bottom:1em;
+
+      h1 {
+        -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: $white;
+      }
+    }
+
+    &-grid {
+      overflow: hidden;
+      background-color:$white;
+      @include box-shadow(4px, 8px, 15px, 0, rgba(#111, 0.25));
+      -webkit-border-radius: 13px;
+      -moz-border-radius: 13px;
+      border-radius: 13px;
+
+
+      img {
+        display: block;
+      }
+
+      .body__text {
+        font-size: 0.9em;
+        padding:1.5em 2em;
+        color:rgba($black, 0.85);
+      }
+    }
+  }
+}
+
 .container__maps {
   width:100%;
-  height:65vh;
+  height:75vh;
   background:grey;
+
+  @include bp-medium() {
+    height:65vh;
+  }
 }
 </style>
 
