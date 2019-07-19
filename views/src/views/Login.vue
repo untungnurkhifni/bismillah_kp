@@ -73,6 +73,9 @@ export default {
         'Masuk sebagai dosen'
       ]
     }),
+  method: {
+    
+  },
   metaInfo: {
     title: "Login | Prodi Teknik Informatika - Universitas Amikom Purwokerto",
     // override the parent template and just use the above title only

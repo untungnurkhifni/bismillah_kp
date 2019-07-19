@@ -15,9 +15,12 @@
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "axios": "^0.19.0",
     "core-js": "^2.6.5",
+    "mapbox-gl": "^1.1.1",
+    "mapbox-gl-vue": "^1.9.0",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.4",
     "vue-flickity": "^1.1.2",
+    "vue-mapbox": "^0.4.1",
     "vue-meta": "^2.0.5",
     "vue-router": "^3.0.7",
     "vuetify": "^1.5.5"

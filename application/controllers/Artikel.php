@@ -23,7 +23,6 @@ class Artikel extends REST_Controller {
 
 	public function index_post()
 	{
-		
 		$title_post = $this->post("judul");
 		$body_post = $this->post("isi");
 		$date_post = $this->post("tanggal");
