@@ -22,37 +22,58 @@
         <v-list-tile
           tag="router-link"
           v-once
-          v-for="(item, index) in items"
+          v-for="(menu__link, index) in menu__links"
           :key="index"
-          :to="item.to"
-          :href="item.href"
+          :to="menu__link.to"
+          :href="menu__link.href"
         >
           <v-list-tile-action>
-            <v-icon v-once>{{ item.icon }}</v-icon>
+            <v-icon v-once>{{ menu__link.icon }}</v-icon>
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title v-once>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title v-once>{{ menu__link.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
+      <!-- menu list -->
     </v-navigation-drawer>
+
     <v-toolbar dark color="deep-purple darken-3" fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat icon color="white">
-        <v-icon>notifications</v-icon>
-      </v-btn>
+      <v-menu v-model="menu" :close-on-content-click="false" :max-width="300" offset-y>
+        <template v-slot:activator="{ on }">
+          <v-btn flat icon color="white" v-on="on">
+            <v-icon>notifications</v-icon>
+          </v-btn>
+        </template>
+        <v-list two-line>
+          <template v-for="(item, index) in items">
+            <v-list-tile :key="item.title" ripple avatar @click="toggle(index)">
+              <v-list-tile-content>
+                <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                <v-list-tile-sub-title class="text--primary">{{ item.headline }}</v-list-tile-sub-title>
+                <v-list-tile-sub-title>{{ item.subtitle }}</v-list-tile-sub-title>
+              </v-list-tile-content>
+
+              <v-list-tile-action>
+                <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
+              </v-list-tile-action>
+            </v-list-tile>
+
+            <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+          </template>
+        </v-list>
+      </v-menu>
     </v-toolbar>
+
+    <!-- content -->
     <v-content>
-      <v-container fluid fill-height>
-        <v-layout justify-center align-center>
-          <v-flex text-xs-center>
-            <!-- router view -->
-            <router-view></router-view>
-          </v-flex>
-        </v-layout>
+      <v-container grid-list-md>
+        <!-- router view -->
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>
@@ -62,12 +83,50 @@
 const base__url = "/dashboard";
 export default {
   data: () => ({
+    menu: false,
     drawer: true,
     items: [
+      {
+        action: "15 min",
+        headline: "Brunch this weekend?",
+        title: "Ali Connors",
+        subtitle:
+          "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+      },
+      {
+        action: "6 hr",
+        headline: "Oui oui",
+        title: "Sandra Adams",
+        subtitle: "Do you have Paris recommendations? Have you ever been?"
+      },
+      {
+        action: "12 hr",
+        headline: "Birthday gift",
+        title: "Trevor Hansen",
+        subtitle:
+          "Have any ideas about what we should get Heidi for her birthday?"
+      },
+      {
+        action: "18hr",
+        headline: "Recipe to try",
+        title: "Britta Holt",
+        subtitle:
+          "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
+      }
+    ],
+    menu__links: [
       { to: base__url + "/home", title: "Home", icon: "dashboard" },
-      { to: base__url + "/post", title: "Post", icon: "question_answer" }
+      { to: base__url + "/post", title: "Post", icon: "question_answer" },
+      {
+        to: "/logout",
+        title: "Logout",
+        icon: "exit_to_app"
+      }
     ]
   }),
+  methods: {
+    //   methods disini nanti...
+  },
   metaInfo: {
     title:
       "Dashboard | Prodi Teknik Informatika - Universitas Amikom Purwokerto",
@@ -80,6 +139,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/css/variables";
+
+// override the stylinh
+.theme--light.application {
+  background-color: lighten(#c6d7db, 13) !important;
+  font-family: $body-font !important;
+}
+
 .v-toolbar__title {
   font-family: $heading-font;
   font-weight: bold;
