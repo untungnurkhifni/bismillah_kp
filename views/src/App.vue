@@ -15,6 +15,19 @@ export default {
 @import './assets/css/mixins';
 @import "../src/assets/css/resets.css";
 
+// transition between routes
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.25s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
+}
+
 .theme--light.application {
   background-color:transparent!important;
 }

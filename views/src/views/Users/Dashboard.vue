@@ -16,9 +16,10 @@
         </v-list>
       </v-toolbar>
 
+      <v-divider></v-divider>
+
       <!-- menu list -->
       <v-list dense>
-        <v-divider></v-divider>
         <v-list-tile
           tag="router-link"
           v-once
@@ -39,7 +40,7 @@
       <!-- menu list -->
     </v-navigation-drawer>
 
-    <v-toolbar dark color="deep-purple darken-3" fixed app>
+    <v-toolbar dark color="purple darken-3" fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -73,7 +74,9 @@
     <v-content>
       <v-container grid-list-md>
         <!-- router view -->
+        <transition name="fade" mode="out-in">
         <router-view></router-view>
+        </transition>
       </v-container>
     </v-content>
   </v-app>
@@ -116,7 +119,9 @@ export default {
     ],
     menu__links: [
       { to: base__url + "/home", title: "Home", icon: "dashboard" },
-      { to: base__url + "/post", title: "Post", icon: "question_answer" },
+      { to: base__url + "/new_posts", title: "Buat artikel", icon: "add" },
+      { to: base__url + "/list_posts", title: "Daftar artikel", icon: "insert_drive_file"},
+      { to: base__url + "/list_users", title: "Daftar dosen", icon: "people"},
       {
         to: "/logout",
         title: "Logout",

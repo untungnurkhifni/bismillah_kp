@@ -8,7 +8,8 @@ import Kurikulum from "./views/Pages/Kurikulum.vue";
 import Dashboard from "./views/Users/Dashboard.vue";
 // children users views
 import Index from "./views/Users/pages/Index.vue";
-import Post from "./views/Users/pages/Post.vue";
+import NewPost from "./views/Users/pages/NewPost.vue";
+import ListPost from "./views/Users/pages/ListPost.vue";
 
 // additions
 import Login from "./views/Login.vue";
@@ -18,6 +19,7 @@ import NotFound from "./views/404.vue";
 Vue.use(Router);
 
 export default new Router({
+	base: process.env.BASE_URL,
 	mode: "history",
 	routes: [
 		{
@@ -55,9 +57,14 @@ export default new Router({
 					component: Index
 				},
 				{
-					path: "post",
-					name: "post",
-					component: Post
+					path: "new_posts",
+					name: "newpost",
+					component: NewPost
+				},
+				{
+					path: "list_posts",
+					name: "listpost",
+					component: ListPost
 				}
 			]
 		},
