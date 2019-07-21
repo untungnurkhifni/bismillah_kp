@@ -18,13 +18,9 @@
             label="Kategori post..."
             required
             ></v-select>
-          <v-textarea
-            v-model="isi__post"
-            :rules="isi__postRules"
-            label="Isi artikel"
-            auto-grow
-            value
-          ></v-textarea>
+         <div class="editor__wrapper">
+            <vue-editor v-model="isi__post"></vue-editor>
+         </div>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn dark color="purple darken-3">Submit</v-btn>
@@ -36,7 +32,12 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
+
 export default {
+  components: {
+    VueEditor
+  },
   data: () => ({
     valid: false,
     judul__post: "",
@@ -46,12 +47,17 @@ export default {
       v => !!v || "Judul harus diisi",
       v => v.length <= 200 || "Judul harus kurang dari 200"
     ],
-    isi__postRules: [v => !!v || "Form harus diisi"],
     kategori__items: [
         'Berita',
         'Prestasi',
         'Event',
     ]
-  })
+  }) 
 };
 </script>
+
+<style scoped>
+.editor__wrapper {
+  margin:1.5em 0;
+}
+</style>
