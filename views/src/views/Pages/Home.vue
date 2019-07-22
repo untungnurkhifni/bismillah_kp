@@ -10,7 +10,6 @@
   </div>
 
   <Achievements />
-  <Maps />
   <Footer></Footer>
 </div>
 </template>
@@ -19,7 +18,6 @@
 import Intro from "../Home/Intro";
 import News from "../Home/News";
 import Achievements from "../Home/Achievements";
-import Maps from "../Home/Maps"
 
 import Header from '../../components/Header';
 import NavBar from '../../components/NavBar'
@@ -33,8 +31,7 @@ export default {
     Footer,
     Intro,
     News,
-    Achievements,
-    Maps
+    Achievements
   },
   metaInfo: {
     title: "Home | Prodi Teknik Informatika - Universitas Amikom Purwokerto",

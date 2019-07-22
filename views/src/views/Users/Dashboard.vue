@@ -59,7 +59,7 @@
       </v-container>
     </v-content>
   </v-app>
-</template>   
+</template>
 
 <script>
 const base__url = "/dashboard";
@@ -103,5 +103,6 @@ export default {
   font-family: $heading-font;
   font-weight: bold;
 }
+
 </style>
 
