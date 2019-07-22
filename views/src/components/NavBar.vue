@@ -6,7 +6,6 @@
         <li><router-link to="/tentang">Tentang kami</router-link></li>
         <li><a href="#">Kontak</a></li>
         <li><a href="#"><font-awesome-icon :icon="['fas', 'globe']" size="lg" /> Website utama</a></li>
-        <li><router-link to="/crud">CRUD (beta test)</router-link></li>
       </ul>
       </div>
       <div><router-link to="/login" class="login-btn"><font-awesome-icon :icon="['fas', 'lock']" size="lg" /> Login</router-link></div>

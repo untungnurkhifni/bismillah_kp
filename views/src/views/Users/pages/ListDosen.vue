@@ -1,10 +1,8 @@
 <template>
-  <div class="container__p">
-    <div class="container__p--inner">
-      <h1>Daftar mahasiswa (testing aja)</h1>
-      <v-app>
+    <v-container>
+        <v-app>
         <v-card-title>
-          <v-btn color="primary" @click="dialogAdd = true">Tambah Data</v-btn>
+          <v-btn dark color="blue-grey darken-3" @click="dialogAdd = true">Tambah Data</v-btn>
           <v-spacer></v-spacer>
           <v-text-field
             v-model="search"
@@ -35,9 +33,7 @@
         </v-data-table>
 
         <v-dialog v-model="dialogAdd" max-width="500px">
-          <v-divider></v-divider>
           <v-card>
-            <v-card-title>Tambah Mahasiswa</v-card-title>
             <v-card-text>
               <v-form ref="form">
                 <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
@@ -56,9 +52,7 @@
         </v-dialog>
 
         <v-dialog v-model="dialogUpdate" max-width="500px">
-          <v-divider></v-divider>
           <v-card>
-            <v-card-title>Tambah Mahasiswa</v-card-title>
             <v-card-text>
               <v-form ref="form">
                 <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
@@ -93,8 +87,7 @@
           </v-card>
         </v-dialog>
       </v-app>
-    </div>
-  </div>
+    </v-container>
 </template>
 
 <script>
@@ -204,5 +197,14 @@ export default {
   }
 };
 </script>
-<style>
+
+<style scoped>
+.v-btn {
+    margin-left:0px;
+    margin-right: 0px;
+}
+
+.v-card__title {
+    padding:18px 0px;
+}
 </style>

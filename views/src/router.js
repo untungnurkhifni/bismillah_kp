@@ -10,10 +10,10 @@ import Dashboard from "./views/Users/Dashboard.vue";
 import Index from "./views/Users/pages/Index.vue";
 import NewPost from "./views/Users/pages/NewPost.vue";
 import ListPost from "./views/Users/pages/ListPost.vue";
+import ListDosen from "./views/Users/pages/ListDosen.vue";
 
 // additions
 import Login from "./views/Login.vue";
-import Crud from "./views/Crud.vue";
 import NotFound from "./views/404.vue";
 
 Vue.use(Router);
@@ -65,13 +65,13 @@ export default new Router({
 					path: "list_posts",
 					name: "listpost",
 					component: ListPost
+				},
+				{
+					path: "list_users",
+					name: "listuser",
+					component: ListDosen
 				}
 			]
-		},
-		{
-			path: "/crud",
-			name: "Crud",
-			component: Crud
 		},
 		{
 			path: "*",

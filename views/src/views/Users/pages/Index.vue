@@ -1,8 +1,9 @@
 <template>
   <div>
-    <v-layout row wrap>
+   <v-container>
+      <v-layout row wrap>
       <v-flex sm12>
-        <v-card dark class="blue-grey darken-4">
+        <v-card dark class="blue-grey darken-3">
           <v-card-text class="px-5 py-5">
             <v-sparkline
               :value="value"
@@ -15,6 +16,12 @@
             >
               <template v-slot:label="item">{{ item.value }}</template>
             </v-sparkline>
+          </v-card-text>
+          <v-card-text class="pt-0">
+            <div class="title font-weight-light mb-2">User Registrations</div>
+            <div class="subheading font-weight-light grey--text">Last Campaign Performance</div>
+            <v-divider class="my-2"></v-divider>
+            <span class="caption grey--text font-weight-light">last registration 26 minutes ago</span>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -33,6 +40,7 @@
         </v-card>
       </v-flex>
     </v-layout>
+   </v-container>
   </div>
 </template>
 

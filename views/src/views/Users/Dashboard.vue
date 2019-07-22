@@ -44,7 +44,7 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn color="red darken-4" dark>
+      <v-btn dark flat>
         <v-icon dark left>exit_to_app</v-icon>Logout
       </v-btn>
     </v-toolbar>

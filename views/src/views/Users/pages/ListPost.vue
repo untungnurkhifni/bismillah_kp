@@ -1,5 +1,10 @@
 <template>
   <div class="list__post">
+       <v-text-field
+            solo
+            label="Cari artikel..."
+            prepend-inner-icon="search"
+          ></v-text-field>
     <h1>Daftar artikel</h1>
     <div class="list__post--entries">
       <div class="list__post--entries__grid">
@@ -7,7 +12,7 @@
         <div class="body__text">
           <div class="body__text--inner">
             <h2>Judul artikel</h2>
-            {{ isi__artikel }}
+            <p class="body-1">{{ isi__artikel }}</p>
           </div>
 
           <div class="body__text--inner">
@@ -64,6 +69,10 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        @include bp-medium() {
+          justify-content: flex-start;
+        }
 
         &--inner {
           padding: 1.5em;
