@@ -10,7 +10,7 @@
             </v-list-tile-avatar>
 
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{this.currentUser.nama}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -22,18 +22,17 @@
       <v-list dense>
         <v-list-tile
           tag="router-link"
-          v-once
           v-for="(menu__link, index) in menu__links"
           :key="index"
           :to="menu__link.to"
           :href="menu__link.href"
         >
           <v-list-tile-action>
-            <v-icon v-once>{{ menu__link.icon }}</v-icon>
+            <v-icon>{{ menu__link.icon }}</v-icon>
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title v-once>{{ menu__link.title }}</v-list-tile-title>
+            <v-list-tile-title>{{ menu__link.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -44,7 +43,7 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Dashboard</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn dark flat>
+      <v-btn dark flat @click="logout($event)">
         <v-icon dark left>exit_to_app</v-icon>Logout
       </v-btn>
     </v-toolbar>
@@ -72,12 +71,32 @@ export default {
       { to: base__url + "/new_posts", title: "Buat artikel", icon: "add" },
       { to: base__url + "/list_posts", title: "Daftar artikel", icon: "insert_drive_file"},
       { to: base__url + "/list_users", title: "Daftar dosen", icon: "people"}
-    ]
+    ],
+    currentUser : ''
   }),
+  created() {
+    this.checkCurrentLogin();
+    this.getDataUser();
+  },
   methods: {
-    //   methods disini nanti...
-    extended() {
-     
+    checkCurrentLogin: function() {
+      if (!localStorage.getItem('isLogin')) {
+      this.$router.replace(this.$route.query.redirect || '/login')
+      console.log("belum Login");
+      }
+    },
+    getDataUser: function () {
+      let data = JSON.parse(localStorage.getItem('user'));
+      this.currentUser = data[0];
+      console.log(this.currentUser);
+    },
+    logout: function(event) {
+      event.preventDefault();
+      localStorage.token = false;
+      this.checkCurrentLogin();
+      localStorage.removeItem('user');
+      localStorage.setItem('isLogin',false);
+      this.$router.replace(this.$route.query.redirect || '/login')
     }
   },
   metaInfo: {

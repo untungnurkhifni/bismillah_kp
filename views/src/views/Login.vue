@@ -42,7 +42,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn dark color="deep-purple darken-3">Login</v-btn>
+                <v-btn dark color="deep-purple darken-3" @click="login($event)">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -73,8 +73,28 @@ export default {
         'Masuk sebagai dosen'
       ]
     }),
-  method: {
-    
+  methods: {
+    login: function(event) {
+      event.preventDefault();
+      let data = {
+        email : this.email,
+        password : this.password
+      }
+      this.axios.post('/login',data)
+      .then((result) => {
+        console.log(result.data);
+        if(result.data.success){
+              localStorage.setItem('user', JSON.stringify(result.data.data));
+              localStorage.setItem('isLogin',true);
+          this.$router.replace(this.$route.query.redirect || '/dashboard');
+        } else{
+          //Login gagal
+          console.log("Gagal masuk");
+        }
+      }).catch((err) => {
+          console.log(err);
+      });
+    }    
   },
   metaInfo: {
     title: "Login | Prodi Teknik Informatika - Universitas Amikom Purwokerto",
