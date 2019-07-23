@@ -2,13 +2,12 @@
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
 require APPPATH . '/libraries/REST_Controller.php';
-
+//mengambil dari tabel Database tb_user
 class User extends REST_Controller {
 
     public function __construct()
     {
         parent::__construct();
-
     }
 
     //Fungsi Get untuk mengambil data
@@ -21,7 +20,7 @@ class User extends REST_Controller {
             'success' => true,
             'message' => 'API',
             //fungsi result sebagai wadah
-            'data' => $data->result()
+            'data'    => $data->result()
 
         ], 200);
     }

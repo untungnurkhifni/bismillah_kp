@@ -3,26 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . '/libraries/REST_Controller.php';
 //mengambil dari tabel Database tb_post
-class Artikel extends REST_Controller {
+class Artikel_Update extends REST_Controller {
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper(array('form', 'url'));
+    }
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->helper(array('form', 'url'));
-	}
+    public function index_get()
+    {
+        $data = $this->db->get('tb_post');
+        //"select * from tb_post"
+        $this->response([
+            'success' => true,
+            'message' => 'Daftar Artikel Baru',
+            'data'    => $data->result()
 
-	public function index_get()
-	{
-		$data = $this->db->get('tb_post');
-		//"select * from tb_post"
-		$this->response([
-			'success' => true,
-			'message' => 'Daftar Artikel',
-			'data'    => $data->result()
-		], 200);
-	}
-															
-	public function index_post()
+        ], 200);
+    }
+
+    public function index_post()
 	{
 		//untuk bagian ini penamaan bebas
 		$id 		  = $this->post("id");
@@ -91,36 +92,3 @@ class Artikel extends REST_Controller {
 			}
 		}
 	}
-		
-		//untuk bagian id,title_post dsb, menyesuaikan tabel di Database
-		
-
-		// $this->load->library('upload', $config);
-		// if ( ! $this->upload->do_upload('berkas')) {
-		// 	$error = array('error' => $this->upload->display_errors());
-		// 	$this->load->view('v_upload', $error);
-		// } else {
-		// 	$data = array('upload_data' => $this->upload->data());
-		// 	$this->load->view('v_upload_sukses', $data);
-		// }
-
-	public function index_delete()
-	{
-		$id = $this->delete('id');
-		$this->db->where('id', $id);
-		$hapus = $this->db->delete('tb_post');
-		if($hapus){
-			$this->response([
-				'success' => true,
-				'message' => 'Data Berhasil Terhapus',
-				'data'    => '404'
-			], 200);
-		} else {
-			$this->response([
-				'success' => false,
-				'message' => 'Data Gagal Dihapus',
-				'data'    => '404'
-			], 200);
-		}
-	}
-}

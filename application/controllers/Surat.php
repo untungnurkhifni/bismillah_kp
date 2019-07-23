@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
 require APPPATH . '/libraries/REST_Controller.php';
-
+//mengambil dari tabel Database tb_surat
 class Surat extends REST_Controller{
 
     public function __construct()
@@ -20,7 +20,7 @@ class Surat extends REST_Controller{
             'success' => true,
             'message' => 'API',
             //fungsi result sebagai wadah
-            'data' => $data->result()
+            'data'    => $data->result()
         ], 200);
     }
 
@@ -30,7 +30,7 @@ class Surat extends REST_Controller{
         $judul_surat    = $this->post("judul_surat");
         $jenis          = $this->post("jenis");
         $deskripsi      = $this->post("deskripsi");
-        $tanggal        = $this->post("tanggal");
+        $tanggal        = $this->post("date");
         $lampiran       = $this->post("lampiran");
 
         $data = array(
@@ -38,7 +38,7 @@ class Surat extends REST_Controller{
             "judul_surat"   => $judul_surat,
             "jenis"         => $jenis,
             "deskripsi"     => $deskripsi,
-            "tanggal"       => $tanggal,
+            "tanggal"       => date("y-m-d"),
             "lampiran"      => $lampiran
         );
 
@@ -69,9 +69,10 @@ class Surat extends REST_Controller{
         $lampiran    = $this->put("lampiran");
 
         $data        = array (
+            
             'judul_surat' => $judul_surat,
             'jenis'       => $jenis,
-            'deskripsi'   => $deskrispi,
+            'deskripsi'   => $deskripsi,
             'tanggal'     => $tanggal,
             'lampiran'    => $lampiran
        

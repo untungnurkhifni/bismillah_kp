@@ -70,6 +70,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['api/categories'] = 'categories';
 $route['api/Artikel'] = 'Artikel';
+$route['api/login'] = 'Login';
 
 
 $route['api/(:any)'] = '$1/index';

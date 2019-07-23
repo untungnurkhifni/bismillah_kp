@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
 require APPPATH . '/libraries/REST_Controller.php';
-
+//mengambil dari tabel Database tb_user
 class Login extends REST_Controller{
     
     public function __construct()
@@ -39,8 +39,6 @@ class Login extends REST_Controller{
                 'data'    => $data->result()
     
             ], 200);
-        }
-
-       
+        } 
     }
 }
