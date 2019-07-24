@@ -8,6 +8,7 @@ class Surat extends REST_Controller{
     public function __construct()
     {
         parent::__construct();
+        $this->load->helper(array('form', 'url'));
     }
 
     //fungsi Get untuk mengambil data
@@ -15,10 +16,10 @@ class Surat extends REST_Controller{
     {
         //mengambil data dari database
         $data = $this->db->get('tb_surat');
-        
+        //select * from tb_surat
         $this->response([
             'success' => true,
-            'message' => 'API',
+            'message' => 'Daftar Surat',
             //fungsi result sebagai wadah
             'data'    => $data->result()
         ], 200);
@@ -26,85 +27,93 @@ class Surat extends REST_Controller{
 
     public function index_post()
     {
+        //untuk bagian ini penamaan bebas
         $id             = $this->post("id");
         $judul_surat    = $this->post("judul_surat");
         $jenis          = $this->post("jenis");
         $deskripsi      = $this->post("deskripsi");
-        $tanggal        = $this->post("date");
-        $lampiran       = $this->post("lampiran");
+        //$tanggal        = $this->post("date");
+       //$lampiran       = $this->post("lampiran");
 
-        $data = array(
-            "id"            => $id,
-            "judul_surat"   => $judul_surat,
-            "jenis"         => $jenis,
-            "deskripsi"     => $deskripsi,
-            "tanggal"       => date("y-m-d"),
-            "lampiran"      => $lampiran
-        );
+        //mengambil nama file yang diupload
+        $file_name = $_FILES['lampiran']['name'];
+        //Merubah nama file yang di upload menjadi :
+        $new_name = $jenis."_".date("d-m-Y")."_".time().".".pathinfo($file_name, PATHINFO_EXTENSION);
+        //konfigurasi library upload
+        //lokasi tempat surat akan disimpan
+        $config['upload_path'] = './uploads_surat/';
+        //file apa saja yang boleh disimpan
+        $config['allowed_types'] = 'pdf|doc|docx';
+        //maksimal ukuran file 10Mb
+        $config['max_size'] = 10000;
+        //file/surat yang di simpan akan di rename menjadi:
+        $config['file_name'] = $new_name;
+        //inisiasi library upload
+        $this->load->library('upload', $config);
 
-        $simpan = $this->db->insert("tb_surat",$data);
-
-        if($simpan){
-            $this->response([
-                'success' => true,
-                'message' => 'Data Berhasil Disimpan',
-                'data'    => '404'
-            ], 200);
-        } else {
+        //proses upload 
+        //do_upload adalah nama function
+        if ( ! $this->upload->do_upload('lampiran')) {
+            //jika gagal
+            $error = array('error' => $this->upload->display_errors());
             $this->response([
                 'success' => false,
-                'message' => 'Data Gagal Disimpan',
+                'message' => $error,
                 'data'    => '404'
-            ], 200);
-        }
-    }
 
-    public function index_put()
-    {
-        $id          = $this->put("id");
-        $judul_surat = $this->put("judul_surat");
-        $jenis       = $this->put("jenis");
-        $deskripsi   = $this->put("deskripsi");
-        $tanggal     = $this->put("tanggal");
-        $lampiran    = $this->put("lampiran");
-
-        $data        = array (
-            
-            'judul_surat' => $judul_surat,
-            'jenis'       => $jenis,
-            'deskripsi'   => $deskripsi,
-            'tanggal'     => $tanggal,
-            'lampiran'    => $lampiran
-       
-        );
-        $this->db->where('id', $id);
-
-        $ubah = $this->db->update('tb_surat',$data);
-        if($ubah) {
-            $this->response([
-                'success' => true,
-                'message' => 'Data berhasil tersimpan',
-                'data'    => '404'
             ], 200);
         } else {
-            $this->response([
-                'success' =>  false,
-                'message' => 'Data berhasil terupdate',
-                'data'    => '404'
-            ], 200);
+            //jika berhasil
+            $data = array(
+                "id"            => $id,
+                "judul_surat"   => $judul_surat,   
+                "jenis"         => $jenis,
+                "deskripsi"     => $deskripsi,
+                "tanggal"       => date("Y-m-d"),
+                "lampiran"      => $new_name
+            );
+            //simpan ke database
+            $simpan = $this->db->insert("tb_surat",$data);
+
+            if($simpan){
+                //berhasil simpan
+                $this->response([
+                    'success' => true,
+                    'message' => 'Data Berhasil Terkirim',
+                    'data'    => '404'
+                ], 200);
+            } else {
+                //gagal simpan
+                $this->response([
+                    'success' => false,
+                    'message' => 'Data Gagal Dikirim',
+                    'data'    => '404'
+                ], 200);
+            }
         }
     }
 
     public function index_delete()
     {
-        $id = $this->delete('id');
-        $this->db->where('id', $id);
+        $id    = $this->delete('id');
+        $surat = $this->db->select('lampiran');
+        $surat = $this->db->where('id', $id);
+        $surat = $this->db->get('tb_surat')->row();
+
+        // $this->db->where('id', $id);
+        // $hapus = $this->db->delete('tb_surat');
+        if($surat != null){
+            //fungsi unlink utntuk menghapus file
+            unlink("uploads_surat/" . $surat->lampiran);
+        }
+        $hapus = $this->db->where('id', $id);
         $hapus = $this->db->delete('tb_surat');
+
         if($hapus){
             $this->response([
                 'success' => true,
                 'message' => 'Data Berhasil Terhapus',
-                'data'    => '404'
+                'data'    => $id
             ], 200);
         } else {
             $this->response([

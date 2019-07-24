@@ -10,14 +10,16 @@ class Artikel extends REST_Controller {
 		parent::__construct();
 		$this->load->helper(array('form', 'url'));
 	}
-
+	//fungsi Get untuk mengambil data
 	public function index_get()
 	{
+		//mengambil data dari database
 		$data = $this->db->get('tb_post');
 		//"select * from tb_post"
 		$this->response([
 			'success' => true,
 			'message' => 'Daftar Artikel',
+			//fungsi result sebagai wadah
 			'data'    => $data->result()
 		], 200);
 	}
@@ -28,24 +30,20 @@ class Artikel extends REST_Controller {
 		$id 		  = $this->post("id");
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
-		$tanggal      = $this->post("tanggal");
+		//$tanggal      = $this->post("tanggal");
 		$kategori 	  = $this->post("kategori");
 
 		//mengambil nama file yang di upload
 		$file_name   = $_FILES['file']['name'];
 		//merubah nama file yang diupload menjadi :
-		$new_name = $kategori."_".date("mdy")."_".time().".".pathinfo($file_name, PATHINFO_EXTENSION);
+		$new_name = $kategori."_".date("d-m-Y")."_".time().".".pathinfo($file_name, PATHINFO_EXTENSION);
 		//konfigurasi library upload
 		//lokasi tempat gambar akan disimpan
-		$config['upload_path']   = './uploads/';
+		$config['upload_path']   = './uploads_artikel/';
 		//file apa saja yang boleh disimpan
 		$config['allowed_types'] = '.gif|jpg|png|jpeg';
-		//maksimal ukuran file /kb
+		//maksimal ukuran file 10Mb
 		$config['max_size']      = 10000;
-		//maksimal dimensi panjang file /kb
-		$config['max_width']     = 25000;
-		//maksimal dimensi tinggi file /kb
-		$config['max_height']    = 14000;
 		//file/gambar yang disimpan akan di rename menjadi :
 		$config['file_name'] = $new_name;
 		//inisiasi library upload
@@ -86,7 +84,7 @@ class Artikel extends REST_Controller {
 				$this->response([
 					'success' => false,
 					'message' => 'Data Gagal Dikirim',
-					'data' => '404'
+					'data'    => '404'
 				], 200);
 			}
 		}
@@ -106,14 +104,23 @@ class Artikel extends REST_Controller {
 
 	public function index_delete()
 	{
-		$id = $this->delete('id');
-		$this->db->where('id', $id);
+		$id     = $this->delete('id');
+		$gambar = $this->db->select('gambar');
+		$gambar = $this->db->where('id', $id);
+		$gambar = $this->db->get('tb_post')->row();
+		//die(json_encode($gambar));
+		if($gambar != null){
+			//fungsi unlink untuk mengahpus file
+			unlink("uploads_artikel/" . $gambar->gambar);
+		}
+		$hapus = $this->db->where('id', $id);
 		$hapus = $this->db->delete('tb_post');
+		
 		if($hapus){
 			$this->response([
 				'success' => true,
 				'message' => 'Data Berhasil Terhapus',
-				'data'    => '404'
+				'data'    => $id
 			], 200);
 		} else {
 			$this->response([
