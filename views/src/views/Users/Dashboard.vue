@@ -71,7 +71,7 @@ export default {
       let data__kategori = this.currentUser.kategori;
       console.log(data__kategori);
 
-      if (data__kategori === "Kaprodi") {
+      if (data__kategori === "prodi") {
         this.menu__links = [
           { to: base__url + "/home", title: "Home", icon: "dashboard" },
           { to: base__url + "/new_posts", title: "Buat artikel", icon: "add" },
