@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2019 at 08:05 PM
+-- Generation Time: Jul 25, 2019 at 04:44 PM
 -- Server version: 10.3.15-MariaDB
 -- PHP Version: 7.3.6
 
@@ -32,7 +32,7 @@ CREATE TABLE `tb_admin` (
   `nim` varchar(30) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `kelas` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_admin`
@@ -40,11 +40,9 @@ CREATE TABLE `tb_admin` (
 
 INSERT INTO `tb_admin` (`nim`, `nama`, `kelas`) VALUES
 ('16.11.8787', 'Sofyan Fathur', 'TI17F'),
-('16.11.9876', 'Desi Putri Pratiwi', 'TI16F'),
 ('17.11.0059', 'Nadila', 'SI17S'),
 ('17.11.0169', 'Rahmat', 'TI16D'),
-('18.11.0132', 'Trisna Maulida', 'TI18C'),
-('dsds', 'dsd', 'sdsd');
+('18.11.0132', 'Trisna Maulida', 'TI18C');
 
 -- --------------------------------------------------------
 
@@ -56,29 +54,19 @@ CREATE TABLE `tb_post` (
   `id` int(30) NOT NULL,
   `title_post` varchar(350) NOT NULL,
   `body_post` text NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `date` date NOT NULL,
+  `kategori` varchar(100) NOT NULL,
+  `gambar` varchar(300) NOT NULL,
+  `id_user` int(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_post`
 --
 
-INSERT INTO `tb_post` (`id`, `title_post`, `body_post`, `date`) VALUES
-(1, 'Judul pertama', 'Ini adalah isi pertama', '2019-07-07'),
-(15, 'Fais Ihzan Jaya', 'Makhluk hidup yang bisa bernafas dengan paru-paru', '2019-07-08'),
-(16, 'Untung Nur Khifni', 'Sedang Proses belajar', '2019-07-08'),
-(17, 'Trian Damai', 'Tanjung Pinang', '2019-07-08'),
-(18, 'Yanuar Arviansyah', 'Karang Lewas', '2019-07-08'),
-(928, 'Mata Elang', 'Sebuah hewan yang berbisa', '2019-07-08'),
-(929, 'Zaenurrochman', 'Karang Kesmana', '2019-07-08'),
-(930, 'Izal Fanjaya', 'Kedungbanteng', '2019-07-08'),
-(931, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(932, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(933, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(934, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(935, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(936, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11'),
-(937, 'Manusia', 'bernafas menggunakan paru-paru', '2019-07-11');
+INSERT INTO `tb_post` (`id`, `title_post`, `body_post`, `date`, `kategori`, `gambar`, `id_user`) VALUES
+(986, 'AA', 'AA', '2019-07-25', 'Event', 'Event_25-07-2019_1564062665.jpg', 0),
+(985, 'baru', 'CC', '2019-07-25', 'CC', 'CC_25-07-2019_1564057828.jpeg', 0);
 
 -- --------------------------------------------------------
 
@@ -94,7 +82,7 @@ CREATE TABLE `tb_surat` (
   `tanggal` date NOT NULL,
   `lampiran` text NOT NULL,
   `id_user` int(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -109,15 +97,16 @@ CREATE TABLE `tb_user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `kategori` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tb_user`
 --
 
 INSERT INTO `tb_user` (`id`, `nama`, `nidn`, `email`, `password`, `kategori`) VALUES
-(1, 'Irfan santiko', 16110137, 'untungkhinfi18@gmail.com', '334rtrt', 'Dosen'),
-(2, 'Trian Damai', 16110188, 'trian18@gmail.com', '334rtrt', 'Dosen');
+(6, 'Untung', 16110137, 'untungkhifni18@gmail.com', '0192023a7bbd73250516f069df18b500', 'Kaprodi'),
+(7, 'Trian', 4567890, 'triandamai@gmail.com', '21232f297a57a5a743894a0e4a801fc3', 'Kaprodi'),
+(8, 'Yanuar', 16110180, 'ijal@gmail.com', '5261aa6496d31b51718d354cdaa0e275', 'Dosen');
 
 --
 -- Indexes for dumped tables
@@ -155,19 +144,19 @@ ALTER TABLE `tb_user`
 -- AUTO_INCREMENT for table `tb_post`
 --
 ALTER TABLE `tb_post`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=938;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=987;
 
 --
 -- AUTO_INCREMENT for table `tb_surat`
 --
 ALTER TABLE `tb_surat`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `tb_user`
 --
 ALTER TABLE `tb_user`
-  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

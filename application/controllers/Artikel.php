@@ -30,7 +30,7 @@ class Artikel extends REST_Controller {
 		$id 		  = $this->post("id");
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
-		//$tanggal      = $this->post("tanggal");
+		//$tanggal     = $this->post("tanggal");
 		$kategori 	  = $this->post("kategori");
 
 		//mengambil nama file yang di upload
