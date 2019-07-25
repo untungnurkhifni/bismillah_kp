@@ -67,7 +67,7 @@ class Artikel extends REST_Controller {
 				"body_post"  => $isi_berita,
 				"date"       => date("Y-m-d"),
 				"kategori"   => $kategori,
-				"gambar"     => $new_name
+				"gambar"     => base_url().'uploads_artikel/'.$new_name
 			);
 			//simpan ke database
 			$simpan = $this->db->insert("tb_post",$data);
@@ -111,7 +111,7 @@ class Artikel extends REST_Controller {
 		//die(json_encode($gambar));
 		if($gambar != null){
 			//fungsi unlink untuk mengahpus file
-			unlink("uploads_artikel/" . $gambar->gambar);
+			@unlink("uploads_artikel/" . $gambar->gambar);
 		}
 		$hapus = $this->db->where('id', $id);
 		$hapus = $this->db->delete('tb_post');
