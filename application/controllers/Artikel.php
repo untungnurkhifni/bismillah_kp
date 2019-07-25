@@ -67,7 +67,7 @@ class Artikel extends REST_Controller {
 				"body_post"  => $isi_berita,
 				"date"       => date("Y-m-d"),
 				"kategori"   => $kategori,
-				"gambar"     => base_url().'uploads_artikel/'.$new_name
+				"gambar"     => $new_name
 			);
 			//simpan ke database
 			$simpan = $this->db->insert("tb_post",$data);

@@ -44,7 +44,7 @@ class Artikel_Update extends REST_Controller {
 		//die(json_encode($gambar));
 		if($gambar != null){
 			//fungsi unlink untuk mengahpus file
-			@unlink($gambar->gambar);
+			@unlink("uploads_artikel/" . $gambar->gambar);
 		}
 		
 
@@ -65,7 +65,7 @@ class Artikel_Update extends REST_Controller {
 				"body_post"  => $isi_berita,
 				"date"       => date("Y-m-d"),
 				"kategori"   => $kategori,
-				"gambar"     => base_url().'uploads_artikel/'.$new_name
+				"gambar"     => $new_name
 			);
 			
 

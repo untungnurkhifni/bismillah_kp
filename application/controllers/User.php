@@ -39,7 +39,7 @@ class User extends REST_Controller {
             "nama"      => $nama,
             "nidn"      => $nidn,
             "email"     => $email,
-            "password"  => $password,
+            "password"  => md5($password),
             "kategori"  => $kategori
         );
 
