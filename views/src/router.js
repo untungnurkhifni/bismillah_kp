@@ -11,7 +11,7 @@ import Index from "./views/Users/pages/Index.vue";
 import NewPost from "./views/Users/pages/NewPost.vue";
 import ListPost from "./views/Users/pages/ListPost.vue";
 import ListDosen from "./views/Users/pages/ListDosen.vue";
-import ListSurat from "./views/Users/pages/ListSurat";
+//import ListSurat from "./views/Users/pages/ListSurat";
 
 // additions
 import Login from "./views/Login.vue";
@@ -72,12 +72,12 @@ const router = new Router({
 					path: "list_users",
 					name: "listuser",
 					component: ListDosen
-				},
-				{
-					path: "list_surat",
-					name: "listsurat",
-					component: ListSurat
 				}
+				// {
+				// 	path: "list_surat",
+				// 	name: "listsurat",
+				// 	component: ListSurat
+				// }
 			]
 		},
 		{

@@ -22,6 +22,9 @@
             placeholder="Pilih gambar..."
             prepend-inner-icon="mdi-camera"
             label="Gambar artikel"
+            ref="files"
+            type="file"
+            @change="onFilePicked($event)"
           >
           </v-file-input>
 
@@ -71,7 +74,11 @@ export default {
       {name: "Prestasi", value:"Prestasi"}, 
       {name:"Event", value:"Event"}
     ],
-    articles: []
+    articles: [],
+    imageName: '',
+		imageUrl: '',
+    imageFile: '',
+    form_data : {}
   }),
   mounted() {
     this.getArticle();
@@ -91,22 +98,52 @@ export default {
         });
     },
     saveArticle() {
+      this.form_data = new FormData();
+      
+     
       let data = {
         title_post: this.title_post,
         body_post: this.body_post,
-        kategori: this.kategori,
-        gambar: this.gambar
+        kategori: this.kategori
       }
+      this.form_data.append('gambar',this.imageFile);
       this.axios
-        .post("/artikel", data)
-        .then(response => {
-          this.getArticle();
-          console.log("Berhasil ngirim..");
+        .post("/artikel", data,this.form_data,{
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }}).then(response => {
+          //this.getArticle();
+          console.log(response.data);
         })
         .catch(err => {
           console.log(err + " Gagal mengirim post heh...");
         });
-    }
+    },
+    pickFile () {
+            this.$refs.image.click ()
+        },
+		
+		onFilePicked (e) {
+			const files = this.$refs.files.files;
+			// if(files[0] !== undefined) {
+			// 	this.imageName = files[0].name
+			// 	if(this.imageName.lastIndexOf('.') <= 0) {
+			// 		return
+			// 	}
+				const fr = new FileReader ()
+				// fr.readAsDataURL(files)
+				// fr.addEventListener('load', () => {
+				// 	this.imageUrl = fr.result
+          this.imageFile = files
+          console.log(files);
+          // this is an image file that can be sent to server...
+				// })
+			// } else {
+			// 	this.imageName = ''
+			// 	this.imageFile = ''
+			// 	this.imageUrl = ''
+			// }
+		}
   }
 };
 </script>
