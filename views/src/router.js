@@ -11,6 +11,7 @@ import Index from "./views/Users/pages/Index.vue";
 import NewPost from "./views/Users/pages/NewPost.vue";
 import ListPost from "./views/Users/pages/ListPost.vue";
 import ListDosen from "./views/Users/pages/ListDosen.vue";
+import ListSurat from "./views/Users/pages/ListSurat";
 
 // additions
 import Login from "./views/Login.vue";
@@ -18,7 +19,7 @@ import NotFound from "./views/404.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
 	base: process.env.BASE_URL,
 	mode: "history",
 	routes: [
@@ -46,6 +47,7 @@ export default new Router({
 			path: "/dashboard",
 			name: "dashboard",
 			component: Dashboard,
+			meta: { requiresAuth: true },
 			children: [
 				{
 					path: "",
@@ -70,6 +72,11 @@ export default new Router({
 					path: "list_users",
 					name: "listuser",
 					component: ListDosen
+				},
+				{
+					path: "list_surat",
+					name: "listsurat",
+					component: ListSurat
 				}
 			]
 		},
@@ -79,3 +86,22 @@ export default new Router({
 		}
 	]
 });
+
+router.beforeEach((to, from, next) => {
+	const user = JSON.parse(localStorage.getItem("user"));
+	if (to.matched.some(record => record.meta.requiresAuth)) {
+		if (user) {
+			next();
+		} else {
+			next({ name: "login", redirect: "login" });
+		}
+	} else {
+		// if (to.fullPath == "/login") {
+		// 	next({ name: "index", redirect: "index" });
+		// } else {
+		next();
+		// }
+	}
+});
+
+export default router;

@@ -40,7 +40,7 @@ export default {
     return {
       flickityOptions: {
         pageDots: false,
-        prevNextButtons: true,
+        prevNextButtons: false,
         autoPlay: 5000,
         wrapAround: true
         

@@ -14,7 +14,7 @@
               hide-details
             ></v-text-field>
           </v-card-title>
-          <v-data-table :headers="headers" :items="kurikulum" :search="search" class="elevation-1">
+          <v-data-table :headers="headers" :items="kurikulum" :items-per-page="5" :search="search" class="elevation-1">
             <template v-slot:items="props">
               <td>{{ props.item.kode }}</td>
               <td class="text-xs-left">{{ props.item.matakuliah }}</td>

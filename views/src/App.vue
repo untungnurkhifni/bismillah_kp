@@ -28,7 +28,7 @@ export default {
   opacity: 0
 }
 
-.theme--light.application {
+.v-application.theme--light {
   background-color:transparent!important;
 }
 

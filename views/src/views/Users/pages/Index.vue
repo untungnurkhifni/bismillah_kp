@@ -2,6 +2,23 @@
   <div>
    <v-container>
       <v-layout row wrap>
+        <v-flex sm4>
+        <v-card class="pa-5" color="orange darken-3" dark>
+         <v-card-text>
+         <div class="display-3 font-weight-bold mb-1 white--text">122</div>
+          <v-divider class="orange lighten-4 my-2"></v-divider>
+          <div class="subheading font-weight-medium white--text">Jumlah dosen</div>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+      <v-flex sm8>
+        <v-card class="pa-5">
+          <v-card-text><span class="body-1"><div class="display-3 font-weight-bold mb-1 black--text">{{ articleLength }}</div>
+          <v-divider class="grey lighten-2 my-2"></v-divider>
+          <div class="subheading font-weight-medium">Jumlah artikel yang dipublikasikan</div></span></v-card-text>
+        </v-card>
+      </v-flex>
+
       <v-flex sm12>
         <v-card dark class="blue-grey darken-3">
           <v-card-text class="px-5 py-5">
@@ -25,20 +42,6 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex sm6>
-        <v-card>
-          <v-card-text
-            class="px-5 py-5"
-          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque quisquam sint culpa ullam doloribus voluptas inventore eos beatae maiores. Explicabo inventore eum fugiat! Totam, voluptatibus et neque magnam ratione eum.</v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex sm6>
-        <v-card>
-          <v-card-text
-            class="px-5 py-5"
-          >Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque quisquam sint culpa ullam doloribus voluptas inventore eos beatae maiores. Explicabo inventore eum fugiat! Totam, voluptatibus et neque magnam ratione eum.</v-card-text>
-        </v-card>
-      </v-flex>
     </v-layout>
    </v-container>
   </div>
@@ -47,7 +50,23 @@
 <script>
 export default {
   data: () => ({
-    value: [1, 7, 10, 0, 0, 4, 2]
-  })
-};
+    value: [1, 7, 10, 0, 0, 4, 2],
+    articleLength:''
+  }),
+  mounted() {
+    this.getArticleLength();
+  },
+  methods: {
+    getArticleLength: function() {
+      this.axios
+        .get("/artikel")
+        .then(response => {
+          this.articleLength = response.data.data.length;
+        })
+        .catch(err => {
+          // console.log(err);
+        });
+    }
+  }
+}
 </script>

@@ -3,46 +3,46 @@
     <v-form v-model="valid">
       <v-container>
         <v-card class="pa-5">
-          <h1 class="mb-4">Blog Posts</h1>
+          <v-card-text class="pa-5">
+          <h1 class="mb-5 black--text">Blog Posts</h1>
+          <v-divider class="my-5"></v-divider>
           <v-text-field
-            v-model="judul__post"
+          outlined
+            v-model="title_post"
             :rules="judul__postRules"
             :counter="200"
             label="Judul post"
             required
           ></v-text-field>
 
-          <div class="file__wrapper">
-            <img :src="imageUrl" height="150" v-if="imageUrl" />
-            <v-text-field
-              label="Pilih gambar"
-              @click="pickFile"
-              v-model="imageName"
-              prepend-inner-icon="attach_file"
-            ></v-text-field>
-            <input
-              type="file"
-              style="display: none"
-              ref="image"
-              accept="image/*"
-              @change="onFilePicked"
-            />
-          </div>
+          <v-file-input
+          outlined
+            v-model="gambar"
+            accept="image/png, image/jpeg, image/bmp"
+            placeholder="Pilih gambar..."
+            prepend-inner-icon="mdi-camera"
+            label="Gambar artikel"
+          >
+          </v-file-input>
 
           <v-select
-            v-model="kategori__post"
+          outlined
+            v-model="kategori"
             :rules="[v => !!v || 'This is required']"
             :items="kategori__items"
             label="Kategori post..."
+            item-text="name"
+            item-value="value"
             required
           ></v-select>
           <div class="editor__wrapper">
-            <vue-editor v-model="isi__post"></vue-editor>
+            <vue-editor v-model="body_post"></vue-editor>
           </div>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn dark color="purple darken-3">Submit</v-btn>
+            <v-btn large dark color="purple darken-3" @click="saveArticle">Submit</v-btn>
           </v-card-actions>
+          </v-card-text>
         </v-card>
       </v-container>
     </v-form>
@@ -58,41 +58,55 @@ export default {
   },
   data: () => ({
     valid: false,
-    judul__post: "",
-    imageName: '',
-		imageUrl: '',
-		imageFile: '',
-    isi__post: "",
-    kategori__post: null,
+    title_post: "",
+    body_post: "",
+    kategori: null,
+    gambar: null,
     judul__postRules: [
       v => !!v || "Judul harus diisi",
       v => v.length <= 200 || "Judul harus kurang dari 200"
     ],
-    kategori__items: ["Berita", "Prestasi", "Event"]
+    kategori__items: [
+      {name: "Berita", value:"Berita"}, 
+      {name: "Prestasi", value:"Prestasi"}, 
+      {name:"Event", value:"Event"}
+    ],
+    articles: []
   }),
+  mounted() {
+    this.getArticle();
+  },
   methods: {
-     pickFile () {
-            this.$refs.image.click ()
-     },
-     onFilePicked (e) {
-			const files = e.target.files;
-			if(files[0] !== undefined) {
-				this.imageName = files[0].name
-				if(this.imageName.lastIndexOf('.') <= 0) {
-					return
-				}
-				const fr = new FileReader();
-				fr.readAsDataURL(files[0]);
-				fr.addEventListener('load', () => {
-					this.imageUrl = fr.result;
-					this.imageFile = files[0];
-				})
-			} else {
-				this.imageName = ''
-				this.imageFile = ''
-				this.imageUrl = ''
-			}
-		}
+    checkKategori(value) {
+      this.kategori = value;
+    },
+    getArticle() {
+      this.axios
+        .get("/artikel")
+        .then(response => {
+          this.articles = response.data.data;
+        })
+        .catch(err => {
+          // console.log(err);
+        });
+    },
+    saveArticle() {
+      let data = {
+        title_post: this.title_post,
+        body_post: this.body_post,
+        kategori: this.kategori,
+        gambar: this.gambar
+      }
+      this.axios
+        .post("/artikel", data)
+        .then(response => {
+          this.getArticle();
+          console.log("Berhasil ngirim..");
+        })
+        .catch(err => {
+          console.log(err + " Gagal mengirim post heh...");
+        });
+    }
   }
 };
 </script>

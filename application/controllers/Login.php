@@ -11,12 +11,12 @@ class Login extends REST_Controller{
     }
 
     //fungsi Get untuk mengambil data
-    public function index_get()
+    public function index_post()
     {
-       $email = $this->get('email');
-       $pass  = $this->get('password');
+       $email = $this->post('email');
+       $pass  = $this->post('password');
        $where = array (
-           'email'=> $email, 'password' => $pass
+           'email'=> $email, 'password' => md5($pass)
         );
 
        $this->db->where($where);

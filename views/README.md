@@ -1,4 +1,4 @@
-# vue
+# kp_amikom
 
 ## Project setup
 ```

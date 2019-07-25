@@ -5,8 +5,8 @@
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
-              <v-toolbar dark color="deep-purple darken-3">
-                <v-btn flat icon color="white">
+              <v-toolbar dark color="purple darken-3">
+                <v-btn text icon color="white">
                   <router-link to="/">
                     <v-icon>arrow_back</v-icon>
                   </router-link>
@@ -14,7 +14,7 @@
                 <v-toolbar-title>Login form</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form @submit.prevent="handleSubmit">
                   <v-text-field 
                     prepend-icon="mail"
                     v-model="email"
@@ -34,15 +34,18 @@
                     prepend-icon="person"
                     v-model="select"
                     :items="items"
+                    item-text="name"
+                    item-value="value"
                     :rules="[v => !!v || 'This is required']"
                     label="Masuk sebagai..."
+                    @change="checkKategori"
                     required
                   ></v-select>
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn dark color="deep-purple darken-3" @click="login($event)">Login</v-btn>
+                <v-btn dark large color="purple darken-3" @click="login($event)">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -68,25 +71,43 @@ export default {
         required: value => !!value || 'Required.'
       },
       select: null,
+      kategori:'',
       items: [
-        'Masuk sebagai prodi',
-        'Masuk sebagai dosen'
+        {name: 'Masuk sebagai prodi', value: "prodi"},
+        {name: 'Masuk sebagai dosen', value: "Dosen"}
       ]
     }),
+  created() {
+    this.checkCurrentLogin();
+  },
   methods: {
+    checkKategori(value) {
+      this.kategori = value;
+    },
+    checkCurrentLogin: function() {
+      if (localStorage.getItem('isLogin')) {
+      this.$router.replace(this.$route.query.redirect || '/dashboard')
+      console.log("belum Login");
+      }
+    },
     login: function(event) {
       event.preventDefault();
       let data = {
         email : this.email,
-        password : this.password
+        password : this.password,
+        kategori: this.kategori
       }
-      this.axios.post('/login',data)
+      this.axios.post('/login', data)
       .then((result) => {
         console.log(result.data);
         if(result.data.success){
-              localStorage.setItem('user', JSON.stringify(result.data.data));
-              localStorage.setItem('isLogin',true);
-          this.$router.replace(this.$route.query.redirect || '/dashboard');
+            localStorage.setItem('user', JSON.stringify(result.data.data));
+            localStorage.setItem('isLogin',true);
+            if(data.kategori === 'prodi') {
+              this.$router.replace(this.$route.query.redirect || '/dashboard'); 
+            } else if(data.kategori === 'Dosen') {
+               this.$router.replace(this.$route.query.redirect || '/dashboard/list_surat');  
+            }
         } else{
           //Login gagal
           console.log("Gagal masuk");
@@ -107,7 +128,7 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/css/variables";
 
-.theme--light.application {
+.v-application.theme--light {
   background-color:lighten(#C6D7DB, 13)!important;
 }
 

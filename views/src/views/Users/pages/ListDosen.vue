@@ -1,139 +1,126 @@
 <template>
-    <v-container>
-        <v-app>
-        <v-card-title>
-          <v-btn dark color="blue-grey darken-3" @click="dialogAdd = true">Tambah Data</v-btn>
-          <v-spacer></v-spacer>
-          <v-text-field
-            v-model="search"
-            append-icon="search"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-card-title>
+  <v-container>
+    <v-app>
+      <v-card-title>
+        <v-btn dark color="blue-grey darken-3" @click="dialogAdd = true">Tambah Data</v-btn>
+        <v-spacer></v-spacer>
+        <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
+      </v-card-title>
 
-        <v-data-table :headers="headers" :items="mahasiswa" :search="search" class="elevation-1">
-          <template slot="items" slot-scope="props">
-            <td>{{props.item.nama}}</td>
-            <td>{{props.item.nim}}</td>
-            <td>{{props.item.kelas}}</td>
-            <td>
-              <v-btn
-                fab
-                small
-                color="primary"
-                title="Ubah"
-                @click="updateConfirmation(props.item.nim,props.item.nama,props.item.kelas),dialogUpdate= true"
-              >E</v-btn>
+      <v-data-table :headers="headers" :items="mahasiswa" :search="search" class="elevation-1">
+        <template v-slot:items="props">
+          <td>{{ props.item.nama }}</td>
+          <td class="text-xs-right">{{ props.item.nim}}</td>
+          <td class="text-xs-right">{{ props.item.kelas }}</td>
+        </template>
 
-              <v-btn fab small color="error" title="Hapus" @click="deleteConfirm(props.item.nim)">D</v-btn>
-            </td>
-          </template>
-        </v-data-table>
+        <template v-slot:item.action="{ item }">
+          <v-btn class="ma-2" outlined color="success"
+           @click="updateConfirmation(item.nim, item.nama, item.kelas), dialogUpdate= true">
+            <v-icon left>mdi-pencil</v-icon> Edit
+          </v-btn>
+           <v-btn class="ma-2" dark color="error"
+           @click="deleteConfirm(item.nim)">
+            <v-icon left>mdi-delete</v-icon> Hapus
+          </v-btn>
+        </template>
+        
+      </v-data-table>
 
-        <v-dialog v-model="dialogAdd" max-width="500px">
-          <v-card>
-            <v-card-text>
-              <v-form ref="form">
-                <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
+      <v-dialog v-model="dialogAdd" max-width="500px">
+        <v-card>
+          <v-card-text>
+            <v-form ref="form">
+              <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
 
-                <v-text-field v-model="nim" :counter="10" label="Nim"></v-text-field>
+              <v-text-field v-model="nim" :counter="10" label="Nim"></v-text-field>
 
-                <v-text-field v-model="kelas" :counter="10" label="Kelas"></v-text-field>
-              </v-form>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn flat color="error" @click="reset">Batal</v-btn>
-              <v-btn flat color="primary" @click="simpanMahasiswa">Simpan</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+              <v-text-field v-model="kelas" :counter="10" label="Kelas"></v-text-field>
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="error" @click="reset">Batal</v-btn>
+            <v-btn text color="primary" @click="simpanMahasiswa">Simpan</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-        <v-dialog v-model="dialogUpdate" max-width="500px">
-          <v-card>
-            <v-card-text>
-              <v-form ref="form">
-                <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
+      <v-dialog v-model="dialogUpdate" max-width="500px">
+        <v-card>
+          <v-card-text>
+            <v-form ref="form">
+              <v-text-field v-model="nama" :counter="10" label="Nama"></v-text-field>
 
-                <v-text-field v-model="nim" :counter="10" label="Nim"></v-text-field>
+              <v-text-field v-model="nim" :counter="10" label="Nim"></v-text-field>
 
-                <v-text-field v-model="kelas" :counter="10" label="Kelas"></v-text-field>
-              </v-form>
-            </v-card-text>
+              <v-text-field v-model="kelas" :counter="10" label="Kelas"></v-text-field>
+            </v-form>
+          </v-card-text>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn flat color="error" @click="reset">Batal</v-btn>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="error" @click="reset">Batal</v-btn>
 
-              <v-btn flat color="primary" @click="updateMahasiswa">Simpan</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+            <v-btn text color="primary" @click="updateMahasiswa">Simpan</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-        <v-dialog v-model="dialogConfirm" max-width="300px">
-          <v-divider></v-divider>
-          <v-card>
-            <v-card-text>
-              <p class="font-weight-bold">Apakah kamu mau menghapus mahasiswa yang dipilih ?</p>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn flat color="error" @click="dialogConfirm = false">Batal</v-btn>
+      <v-dialog v-model="dialogConfirm" max-width="500px">
+        <v-divider></v-divider>
+        <v-card>
+          <v-card-text>
+            <h2 class="headline font-weight-bold">Apakah kamu mau menghapus mahasiswa yang dipilih?</h2>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text color="error" @click="dialogConfirm = false">Batal</v-btn>
 
-              <v-btn flat color="primary" @click="hapusMahasiswa(nim),dialogConfirm= false">Oke</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-app>
-    </v-container>
+            <v-btn text color="primary" @click="hapusMahasiswa(nim),dialogConfirm= false">Oke</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-app>
+  </v-container>
 </template>
 
 <script>
 export default {
   data: () => ({
-    nama: "",
-    nim: "",
-    kelas: "",
     headers: [
       {
         text: "Nama",
-        value: "Nama"
+        align: "left",
+        sortable: true,
+        value: "nama"
       },
-      {
-        text: "Nim",
-        value: "Nim"
-      },
-      {
-        text: "Kelas",
-        value: "Kelas"
-      },
-      {
-        text: "Action",
-        value: "Action"
-      }
+      { text: "Nim", value: "nim" },
+      { text: "Kelas", value: "kelas" },
+      { text: "Action", value: "action" }
     ],
     mahasiswa: [],
     search: "",
     dialogAdd: false,
     dialogConfirm: false,
-    dialogUpdate: false
+    dialogUpdate: false,
+    nama: "",
+    nim: "",
+    kelas: ""
   }),
   mounted() {
     this.ambilData();
   },
-
   methods: {
-    ambilData() {
+    ambilData: function() {
       this.axios
         .get("/site")
         .then(res => {
           this.mahasiswa = res.data.mahasiswa;
-          console.log(res.data);
+          //  console.log(this.mahasiswa);
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
         });
     },
     reset() {
@@ -200,11 +187,11 @@ export default {
 
 <style scoped>
 .v-btn {
-    margin-left:0px;
-    margin-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 .v-card__title {
-    padding:18px 0px;
+  padding: 18px 0px;
 }
 </style>

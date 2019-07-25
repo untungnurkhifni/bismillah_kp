@@ -1,34 +1,15 @@
 <template>
      <div class="grid__wrapper">
           <div class="grid__wrapper--heading"><h1>Berita terkini</h1>
-          
           <button aria-describedby="Baca selengkapnya"><span>Baca selengkapnya</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="arcs"><path d="M5 12h13M12 5l7 7-7 7"/></svg></button>
           </div>
-          <div class="grid__wrapper--news">
-            <img src="../../assets/img/placeholder.png" alt="">
-            <h2>Judul berita</h2>
-            {{ lorem }}
-            <a href="#" class="btn-go">Baca selengkapnya</a>
-          </div>
 
-          <div class="grid__wrapper--news">
-            <img src="../../assets/img/placeholder.png" alt="">
-            <h2>Judul berita</h2>
-            {{ lorem }}
-            <a href="#" class="btn-go">Baca selengkapnya</a>
-          </div>
-
-          <div class="grid__wrapper--news">
-            <img src="../../assets/img/placeholder.png" alt="">
-            <h2>Judul berita</h2>
-            {{ lorem }}
-            <a href="#" class="btn-go">Baca selengkapnya</a>
-          </div>
-
-          <div class="grid__wrapper--news">
-            <img src="../../assets/img/placeholder.png" alt="">
-            <h2>Judul berita</h2>
-            {{ lorem }}
+          <div class="grid__wrapper--news"
+            v-for="(item, i) in items"
+            :key="i">
+           <img :src="item.gambar" alt />
+           <h2>{{ item.title_post }} </h2>
+            {{ item.body_post | truncate(350) }}
             <a href="#" class="btn-go">Baca selengkapnya</a>
           </div>
         </div>
@@ -36,9 +17,30 @@
 
 <script>
 export default {
-    data: function() {
-    return {
-      lorem:"Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui. Et percipit laboramus usu, no invidunt verterem nominati mel."
+    data: () => ({
+    items:[]
+  }),
+  mounted() {
+    this.getArticle();
+  },
+  filters: {
+    truncate: function(value, limit) {
+      if(value.length > limit) {
+        value = value.substring(0, (limit - 3)) + '...';
+      }
+      return value;
+    }
+  },
+  methods: {
+    getArticle: function() {
+      this.axios
+        .get("/artikel")
+        .then(response => {
+          this.items = response.data.data;
+        })
+        .catch(err => {
+          // console.log(err);
+        });
     }
   }
 }
