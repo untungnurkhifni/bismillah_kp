@@ -8,7 +8,7 @@
       v-bind:item="item"
       :index="index"
       :key="item.id">
-        <img :src="item.gambar" alt />
+        <img :src="'http://localhost/kp_amikom/uploads_artikel/'+item.gambar" alt />
         <div class="body__text">
           <div class="body__text--inner">
             <h2>{{ item.title_post }}</h2>
