@@ -32,9 +32,7 @@ class Surat extends REST_Controller{
         $judul_surat    = $this->post("judul_surat");
         $jenis          = $this->post("jenis");
         $deskripsi      = $this->post("deskripsi");
-        //$tanggal        = $this->post("date");
-       //$lampiran       = $this->post("lampiran");
-
+     
         //mengambil nama file yang diupload
         $file_name = $_FILES['lampiran']['name'];
         //Merubah nama file yang di upload menjadi :

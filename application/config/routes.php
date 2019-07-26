@@ -72,6 +72,7 @@ $route['api/categories'] = 'categories';
 $route['api/Artikel'] = 'Artikel';
 $route['api/hapusartikel'] = 'DeleteArtikel';
 $route['api/login'] = 'Login';
+$route['api/Kaprodi'] = 'Kaprodi';
 
 
 $route['api/(:any)'] = '$1/index';

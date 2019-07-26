@@ -14,7 +14,11 @@ class Artikel extends REST_Controller {
 	public function index_get()
 	{
 		//mengambil data dari database
+		$id= $this->get('id');
 		$data = $this->db->get('tb_post');
+		$data = $this->db->where('id_user', $id);
+		$data = $this->db->get('tb_post');
+		
 		//"select * from tb_post"
 		$this->response([
 			'success' => true,
@@ -68,8 +72,4 @@ class Artikel extends REST_Controller {
 			}
 		
 	}
-		
-
-
-	
 }
