@@ -17,14 +17,13 @@
 
           <v-file-input
           outlined
-            v-model="gambar"
             accept="image/png, image/jpeg, image/bmp"
             placeholder="Pilih gambar..."
             prepend-inner-icon="mdi-camera"
             label="Gambar artikel"
             ref="files"
             type="file"
-            @change="onFilePicked($event)"
+            @change="onFilePicked"
           >
           </v-file-input>
 
@@ -78,15 +77,28 @@ export default {
     imageName: '',
 		imageUrl: '',
     imageFile: '',
-    form_data : {}
+    imageType: '',
+    form_data : {},
+    currentUser : ''
   }),
+  created(){
+     this.getCurrentUser();
+  },
   mounted() {
     this.getArticle();
+   
   },
   methods: {
     checkKategori(value) {
       this.kategori = value;
     },
+      getCurrentUser :function(){
+        let userData= JSON.parse(localStorage.getItem("user"));
+        this.currentUser = userData[0];
+        
+       
+      }
+    ,
     getArticle() {
       this.axios
         .get("/artikel")
@@ -98,51 +110,34 @@ export default {
         });
     },
     saveArticle() {
-      this.form_data = new FormData();
-      
-     
+
       let data = {
         title_post: this.title_post,
         body_post: this.body_post,
-        kategori: this.kategori
+        kategori: this.kategori,
+        image : this.imageUrl,
+        ext : this.imageType,
+        id_user : this.currentUser.id
       }
-      this.form_data.append('gambar',this.imageFile);
+     
       this.axios
-        .post("/artikel", data,this.form_data,{
-    headers: {
-        'Content-Type': 'multipart/form-data'
-    }}).then(response => {
-          //this.getArticle();
-          console.log(response.data);
+        .post("/artikel",data).then(response => {
+         
+         // console.log(response.data);
         })
         .catch(err => {
           console.log(err + " Gagal mengirim post heh...");
         });
     },
-    pickFile () {
-            this.$refs.image.click ()
-        },
-		
 		onFilePicked (e) {
-			const files = this.$refs.files.files;
-			// if(files[0] !== undefined) {
-			// 	this.imageName = files[0].name
-			// 	if(this.imageName.lastIndexOf('.') <= 0) {
-			// 		return
-			// 	}
-				const fr = new FileReader ()
-				// fr.readAsDataURL(files)
-				// fr.addEventListener('load', () => {
-				// 	this.imageUrl = fr.result
-          this.imageFile = files
-          console.log(files);
-          // this is an image file that can be sent to server...
-				// })
-			// } else {
-			// 	this.imageName = ''
-			// 	this.imageFile = ''
-			// 	this.imageUrl = ''
-			// }
+      const fr = new FileReader ()
+				fr.readAsDataURL(e)
+				fr.addEventListener('load', () => {
+					this.imageUrl = fr.result
+          this.imageFile = e // this is an image file that can be sent to server...
+          this.imageType = e.type
+         // console.log(fr.result)
+				})
 		}
   }
 };

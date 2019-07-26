@@ -8,7 +8,7 @@
         <li><a href="#"><font-awesome-icon :icon="['fas', 'globe']" size="lg" /> Website utama</a></li>
       </ul>
       </div>
-      <div><router-link to="/login" class="login-btn"><font-awesome-icon :icon="['fas', 'lock']" size="lg" /> Login</router-link></div>
+      <div><router-link to="/login" class="login-btn"><font-awesome-icon :icon="['fas', 'lock']" size="lg" /> {{currentUser.email}}</router-link></div>
     </div>
     <div class="navigation__bar">
       <div class="navigation__bar--logo">
@@ -163,7 +163,35 @@
     </div>
   </nav>
 </template>
-
+<script>
+ export default{
+   data: () => ({
+    isLogin : false,
+    currentUser : '',
+    login :''
+  }),
+  created() {
+    this.checkCurrentLogin();
+   this.getDataUser();
+  },
+  methods:{
+    checkCurrentLogin:function(){
+      if (localStorage.getItem("isLogin")) {
+        
+        this.isLogin = true
+      
+      }else{
+        this.isLogin = false
+        this.currentUser = {email : 'login'}
+      }
+    },
+    getDataUser: function() {
+      let data = JSON.parse(localStorage.getItem("user"));
+      this.currentUser = data[0];
+    }
+    }
+ }
+</script>
 <style lang="scss" scoped>
 @import "../assets/css/variables";
 

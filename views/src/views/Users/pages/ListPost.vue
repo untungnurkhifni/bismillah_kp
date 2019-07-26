@@ -119,7 +119,7 @@ export default {
           this.items.sort((a, b) => b.id - a.id); // descending
         })
         .catch(error => {
-          // console.log(err);
+        
         });
     },
     updateArticle() {
@@ -138,13 +138,17 @@ export default {
           console.log(err);
         });
     },
-    deleteArticle(id) {
+    deleteArticle(ida) {
+  
+  let data ={
+    id : ida
+  }
       this.axios
-        .delete("/artikel?id=" + id)
+        .post("/hapusartikel",data)
         .then(response => {
           this.dialogConfirm = false;
           this.getArticle();
-          console.log(response.data.data);
+         
         })
         .catch(error => {
           console.log(error);

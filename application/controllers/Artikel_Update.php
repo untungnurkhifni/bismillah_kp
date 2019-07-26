@@ -15,26 +15,18 @@ class Artikel_Update extends REST_Controller {
 	{
 		//untuk bagian ini penamaan bebas
 		$id 		  = $this->post("id");
+		$id_user	  = $this->post("id_user");
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
-		//$tanggal      = $this->post("tanggal");
 		$kategori 	  = $this->post("kategori");
+		$img 			= $this->post('image');
+		$ext 			= $this->post('ext');
 
-		//mengambil nama file yang di upload
-		$file_name   = $_FILES['file']['name'];
-		//merubah nama file yang diupload menjadi :
-		$new_name = $kategori."_".date("d-m-Y")."_".time().".".pathinfo($file_name, PATHINFO_EXTENSION);
-		// die(json_encode($new_name));
-		//konfigurasi library upload
-		//lokasi tempat gambar akan disimpan
-		$config['upload_path']   = './uploads_artikel/';
-		//file apa saja yang boleh disimpan
-		$config['allowed_types'] = '.gif|jpg|png|jpeg';
-		//maksimal ukuran file /kb
-		$config['max_size']      = 10000;
-		//file/gambar yang disimpan akan di rename menjadi :
-		$config['file_name'] = $new_name;
-		//inisiasi library upload
+		$ext_final = str_replace("image/","",$ext);
+		$img = substr(explode(";",$img)[1], 7);
+		$new_name = $kategori."_".date("d-m-Y")."_".time().".".$ext_final;
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/kp_amikom/uploads_artikel/".$new_name, base64_decode($img));
+
 		$this->load->library('Upload', $config);
 	
 		//untuk refresh image yang baru
@@ -49,26 +41,16 @@ class Artikel_Update extends REST_Controller {
 		
 
 		//proses upload
-		if ( ! $this->upload->do_upload('file')) {
-			//jika gagal
-			$error = array('error' => $this->upload->display_errors());
-			$this->response([
-				'success' => false,
-				'message' => $error,
-				'data' => '404'
-			], 200);
-		} else {
-			//berhasil
+		
 			$data = array(	
-				"id"         => $id,
+				"id_user"         => $id_user,
 				"title_post" => $judul,
 				"body_post"  => $isi_berita,
 				"date"       => date("Y-m-d"),
 				"kategori"   => $kategori,
-				"gambar"     => $new_name
+				"gambar"     => $new_name,
+				"full_gambar"=> base_url()."kp_amikom/uploads_artikel/".$new_name
 			);
-			
-
 			
 			//simpan ke database
 			$this->db->where('id', $id);
@@ -90,5 +72,5 @@ class Artikel_Update extends REST_Controller {
 				], 200);
 			}
 		}
-	}
+	
 }

@@ -27,47 +27,27 @@ class Artikel extends REST_Controller {
 	public function index_post()
 	{
 		//untuk bagian ini penamaan bebas
-		$id 		  = $this->post("id");
+		$id_user 		  = $this->post("id_user");
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
-		//$tanggal     = $this->post("tanggal");
 		$kategori 	  = $this->post("kategori");
+		$img 			= $this->post('image');
+		$ext 			= $this->post('ext');
 
-		//mengambil nama file yang di upload
-		$file_name   = $_FILES['file']['name'];
-		//merubah nama file yang diupload menjadi :
-		$new_name = $kategori."_".date("d-m-Y")."_".time().".".pathinfo($file_name, PATHINFO_EXTENSION);
-		//konfigurasi library upload
-		//lokasi tempat gambar akan disimpan
-		$config['upload_path']   = './uploads_artikel/';
-		//file apa saja yang boleh disimpan
-		$config['allowed_types'] = '.gif|jpg|png|jpeg';
-		//maksimal ukuran file 10Mb
-		$config['max_size']      = 10000;
-		//file/gambar yang disimpan akan di rename menjadi :
-		$config['file_name'] = $new_name;
-		//inisiasi library upload
-		$this->load->library('Upload', $config);
-	
+		$ext_final = str_replace("image/","",$ext);
+		$img = substr(explode(";",$img)[1], 7);
+		$new_name = $kategori."_".date("d-m-Y")."_".time().".".$ext_final;
+		file_put_contents($_SERVER['DOCUMENT_ROOT']."/kp_amikom/uploads_artikel/".$new_name, base64_decode($img));
 
-		//proses upload
-		if ( ! $this->upload->do_upload('file')) {
-			//jika gagal
-			$error = array('error' => $this->upload->display_errors());
-			$this->response([
-				'success' => false,
-				'message' => $error,
-				'data' => '404'
-			], 200);
-		} else {
-			//berhasil
+		
 			$data = array(	
-				"id"         => $id,
+				"id_user"    => $id_user,
 				"title_post" => $judul,
 				"body_post"  => $isi_berita,
 				"date"       => date("Y-m-d"),
 				"kategori"   => $kategori,
-				"gambar"     => $new_name
+				"gambar"     => $new_name,
+				"full_gambar"=> base_url()."kp_amikom/uploads_artikel/".$new_name
 			);
 			//simpan ke database
 			$simpan = $this->db->insert("tb_post",$data);
@@ -87,47 +67,10 @@ class Artikel extends REST_Controller {
 					'data'    => '404'
 				], 200);
 			}
-		}
+		
 	}
 		
-		//untuk bagian id,title_post dsb, menyesuaikan tabel di Database
-		
 
-		// $this->load->library('upload', $config);
-		// if ( ! $this->upload->do_upload('berkas')) {
-		// 	$error = array('error' => $this->upload->display_errors());
-		// 	$this->load->view('v_upload', $error);
-		// } else {
-		// 	$data = array('upload_data' => $this->upload->data());
-		// 	$this->load->view('v_upload_sukses', $data);
-		// }
 
-	public function index_delete()
-	{
-		$id     = $this->delete('id');
-		$gambar = $this->db->select('gambar');
-		$gambar = $this->db->where('id', $id);
-		$gambar = $this->db->get('tb_post')->row();
-		//die(json_encode($gambar));
-		if($gambar != null){
-			//fungsi unlink untuk mengahpus file
-			@unlink("uploads_artikel/" . $gambar->gambar);
-		}
-		$hapus = $this->db->where('id', $id);
-		$hapus = $this->db->delete('tb_post');
-		
-		if($hapus){
-			$this->response([
-				'success' => true,
-				'message' => 'Data Berhasil Terhapus',
-				'data'    => $id
-			], 200);
-		} else {
-			$this->response([
-				'success' => false,
-				'message' => 'Data Gagal Dihapus',
-				'data'    => '404'
-			], 200);
-		}
-	}
+	
 }
