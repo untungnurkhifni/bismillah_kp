@@ -31,8 +31,6 @@ class Artikel extends REST_Controller {
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
 		$kategori 	  = $this->post("kategori");
-		$img 			= $this->post('image');
-		$ext 			= $this->post('ext');
 
 		$ext_final = str_replace("image/","",$ext);
 		$img = substr(explode(";",$img)[1], 7);
@@ -48,7 +46,7 @@ class Artikel extends REST_Controller {
 				"kategori"   => $kategori,
 				"gambar"     => $new_name,
 				"full_gambar"=> base_url()."kp_amikom/uploads_artikel/".$new_name
-			);
+						);
 			//simpan ke database
 			$simpan = $this->db->insert("tb_post",$data);
 			

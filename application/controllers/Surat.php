@@ -70,7 +70,8 @@ class Surat extends REST_Controller{
                 "jenis"         => $jenis,
                 "deskripsi"     => $deskripsi,
                 "tanggal"       => date("Y-m-d"),
-                "lampiran"      => $new_name
+                "lampiran"      => $new_name,
+                "full_surat"    => base_url().'uploads_surat/'.$new_name
             );
             //simpan ke database
             $simpan = $this->db->insert("tb_surat",$data);
