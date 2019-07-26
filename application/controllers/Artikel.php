@@ -31,7 +31,7 @@ class Artikel extends REST_Controller {
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
 		$kategori 	  = $this->post("kategori");
-
+		$img 		= $this->post("image");
 		$ext_final = str_replace("image/","",$ext);
 		$img = substr(explode(";",$img)[1], 7);
 		$new_name = $kategori."_".date("d-m-Y")."_".time().".".$ext_final;

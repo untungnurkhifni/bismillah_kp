@@ -19,7 +19,8 @@ class Artikel_Update extends REST_Controller {
 		$judul        = $this->post("title_post");
 		$isi_berita   = $this->post("body_post");
 		$kategori 	  = $this->post("kategori");
-		$ext_final = str_replace("image/","",$ext);		$img = substr(explode(";",$img)[1], 7)
+		$img 		= $this->post("image");
+		$ext_final = str_replace("image/","",$ext);		$img = substr(explode(";",$img)[1], 7);
 		$new_name = $kategori."_".date("d-m-Y")."_".time().".".$ext_final;
 	file_put_contents($_SERVER['DOCUMENT_ROOT']."/kp_amikom/uploads_artikel/".$new_name, base64_decode($img));
 
